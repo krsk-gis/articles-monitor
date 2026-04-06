@@ -2,7 +2,7 @@ name: Heti Scopus Frissítés
 
 on:
   schedule:
-    - cron: '0 8 * * 1' # Minden hétfőn reggel 8:00 (UTC)
+    - cron: '0 8 1 * *' # Minden hétfőn reggel 8:00 (UTC)
   workflow_dispatch: # Ez lehetővé teszi, hogy te is elindítsd gombnyomásra
 
 jobs:
