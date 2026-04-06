@@ -20,17 +20,29 @@ THEMES = {
 
 def fetch_scopus_data(query, sort_by):
     headers = {'X-ELS-APIKey': API_KEY, 'Accept': 'application/json'}
-    params = {'query': query, 'sort': sort_by, 'count': 5}
+    params = {'query': query, 'sort': sort_by, 'count': 10}
     try:
         response = requests.get(BASE_URL, headers=headers, params=params)
         response.raise_for_status()
         entries = response.json().get('search-results', {}).get('entry', [])
-        return [{
-            'title': item.get('dc:title', 'Nincs cím'),
-            'date': item.get('prism:coverDate', ''),
-            'citations': item.get('citedby-count', '0'),
-            'link': item.get('prism:url', '#')
-        } for item in entries]
+        
+        results = []
+        for item in entries:
+            # 1. Kikeressük az igazi, böngészőben is megnyitható Scopus linket
+            scopus_link = '#'
+            for link_obj in item.get('link', []):
+                if link_obj.get('@ref') == 'scopus':
+                    scopus_link = link_obj.get('@href')
+                    break
+            
+            # 2. Hozzáadjuk a listához a megfelelő linkkel
+            results.append({
+                'title': item.get('dc:title', 'Nincs cím'),
+                'date': item.get('prism:coverDate', ''),
+                'citations': item.get('citedby-count', '0'),
+                'link': scopus_link  # Itt már a jó linket adjuk át
+            })
+        return results
     except Exception as e:
         print(f"Hiba: {e}")
         return []
@@ -39,7 +51,7 @@ def fetch_scopus_data(query, sort_by):
 content_html = ""
 for theme, en_query in THEMES.items():
     print(f"Lekérdezés: {theme}...")
-    search_query = f'TITLE-ABS-KEY({en_query}) AND PUBYEAR > 2022 AND PUBYEAR < 2026'
+    search_query = f'TITLE-ABS-KEY({en_query}) AND PUBYEAR > 2021 AND PUBYEAR < 2026'
     
     latest = fetch_scopus_data(search_query, '-coverDate')
     popular = fetch_scopus_data(search_query, '-citedby-count')
@@ -64,7 +76,7 @@ html_template = f"""
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
-    <title>Szakmai Monitor</title>
+    <title>Szakmai cikk monitor</title>
     <style>
         body {{ font-family: sans-serif; background: #f0f2f5; padding: 20px; }}
         .container {{ max-width: 1400px; margin: 0 auto; }}
