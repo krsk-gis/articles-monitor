@@ -20,7 +20,7 @@ THEMES = {
 
 def fetch_scopus_data(query, sort_by):
     headers = {'X-ELS-APIKey': API_KEY, 'Accept': 'application/json'}
-    params = {'query': query, 'sort': sort_by, 'count': 10}
+    params = {'query': query, 'sort': sort_by, 'count': 10} # 10 cikkre állítva
     try:
         response = requests.get(BASE_URL, headers=headers, params=params)
         response.raise_for_status()
@@ -35,12 +35,12 @@ def fetch_scopus_data(query, sort_by):
                     scopus_link = link_obj.get('@href')
                     break
             
-            # 2. Hozzáadjuk a listához a megfelelő linkkel
+            # 2. Hozzáadjuk a listához
             results.append({
                 'title': item.get('dc:title', 'Nincs cím'),
                 'date': item.get('prism:coverDate', ''),
                 'citations': item.get('citedby-count', '0'),
-                'link': scopus_link  # Itt már a jó linket adjuk át
+                'link': scopus_link
             })
         return results
     except Exception as e:
@@ -59,40 +59,60 @@ for theme, en_query in THEMES.items():
     # HTML szekció generálása minden témának
     content_html += f"<div class='theme-section'><h2>{theme.upper()}</h2><div class='grid'>"
     
-    content_html += "<div><h3 style='color: #2e7d32;'>Legfrissebbek 🆕</h3>"
+    content_html += "<div><h3 class='title-latest'>Legfrissebbek 🆕</h3>"
     for a in latest:
-        content_html += f"<div class='article'><strong><a href='{a['link']}'>{a['title']}</a></strong><br>Dátum: {a['date']}</div>"
+        content_html += f"<div class='article'><strong><a href='{a['link']}' target='_blank'>{a['title']}</a></strong><br><span class='date-info'>Dátum: {a['date']}</span></div>"
     content_html += "</div>"
     
-    content_html += "<div><h3 style='color: #c62828;'>Legnépszerűbbek 🔥</h3>"
+    content_html += "<div><h3 class='title-popular'>Legnépszerűbbek 🔥</h3>"
     for a in popular:
-        content_html += f"<div class='article'><strong><a href='{a['link']}'>{a['title']}</a></strong><br><span class='citations'>Hivatkozások: {a['citations']}</span></div>"
+        content_html += f"<div class='article'><strong><a href='{a['link']}' target='_blank'>{a['title']}</a></strong><br><span class='citations'>Hivatkozások: {a['citations']}</span></div>"
     content_html += "</div></div></div>"
 
-# Teljes HTML összerakása
+# Teljes HTML összerakása (SÖTÉT TÉMA CSS)
 frissitve = datetime.now().strftime("%Y. %m. %d. %H:%M")
 html_template = f"""
 <!DOCTYPE html>
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
-    <title>Szakmai cikk monitor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cikk monitor</title>
     <style>
-        body {{ font-family: sans-serif; background: #f0f2f5; padding: 20px; }}
+        /* Sötét téma alapok */
+        body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #121212; color: #e0e0e0; padding: 20px; margin: 0; line-height: 1.5; }}
         .container {{ max-width: 1400px; margin: 0 auto; }}
-        .theme-section {{ background: white; margin-bottom: 30px; border-radius: 8px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }}
-        h1 {{ color: #1a73e8; border-bottom: 2px solid #1a73e8; padding-bottom: 10px; text-align: center; }}
-        .grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }}
-        .article {{ font-size: 0.9em; border-left: 3px solid #1a73e8; padding-left: 10px; margin-bottom: 15px; }}
-        .article a {{ color: #333; text-decoration: none; }}
-        .article a:hover {{ text-decoration: underline; color: #1a73e8; }}
-        .citations {{ color: #d32f2f; font-weight: bold; }}
-        .update-info {{ text-align: center; color: #666; margin-bottom: 30px; }}
+        
+        /* Kártyák sötétben */
+        .theme-section {{ background: #1e1e1e; margin-bottom: 30px; border-radius: 10px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 1px solid #333; }}
+        
+        /* Címsorok */
+        h1 {{ color: #64b5f6; border-bottom: 2px solid #64b5f6; padding-bottom: 10px; text-align: center; margin-bottom: 30px; }}
+        h2 {{ color: #ffffff; border-bottom: 1px solid #444; padding-bottom: 10px; margin-top: 0; font-size: 1.5em; }}
+        .title-latest {{ color: #81c784; }} /* Pasztell zöld */
+        .title-popular {{ color: #e57373; }} /* Pasztell piros */
+        
+        /* Rács és cikkek */
+        .grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }}
+        @media (max-width: 900px) {{ .grid {{ grid-template-columns: 1fr; }} }} /* Mobilon egymás alá kerülnek */
+        
+        .article {{ font-size: 0.95em; border-left: 3px solid #64b5f6; padding-left: 12px; margin-bottom: 18px; }}
+        
+        /* Linkek */
+        .article a {{ color: #e0e0e0; text-decoration: none; font-weight: 500; transition: color 0.2s; }}
+        .article a:hover {{ text-decoration: underline; color: #90caf9; }}
+        
+        /* Címkék */
+        .citations {{ display: inline-block; background: #3e2723; color: #ff8a80; padding: 3px 8px; border-radius: 4px; font-weight: bold; margin-top: 5px; font-size: 0.85em; border: 1px solid #5d4037; }}
+        .date-info {{ color: #9e9e9e; font-size: 0.85em; }}
+        
+        /* Lábjegyzet */
+        .update-info {{ text-align: center; color: #9e9e9e; margin-bottom: 30px; font-style: italic; }}
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Társadalomtudományi Monitor (2023-2025)</h1>
+        <h1>Társadalomtudományi monitor (2022-2025)</h1>
         <div class="update-info">Utoljára automatikusan frissítve: {frissitve}</div>
         {content_html}
     </div>
@@ -103,4 +123,4 @@ html_template = f"""
 # HTML fájl elmentése
 with open('index.html', 'w', encoding='utf-8') as f:
     f.write(html_template)
-print("index.html sikeresen legenerálva!")
+print("index.html sikeresen legenerálva sötét témával!")
