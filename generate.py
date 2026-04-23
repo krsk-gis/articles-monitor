@@ -16,7 +16,7 @@ THEMES = {
     'ai a társadalomtudományokban': '("artificial intelligence" OR AI OR "machine learning") AND "social sciences"',
     'big data a tér/társadalomtudományban': '"big data" AND ("social sciences" OR "urban" OR "geography")',
     'részvételi költségvetés': '"participatory budgeting" OR "participatory budget"',
-    'kreatív oktatás':'"creative education" OR "personalized education"'
+    'kreatív oktatás':'"creative education" OR "personalized education" OR "multimodal education"'
 }
 
 def fetch_scopus_data(query, sort_by):
