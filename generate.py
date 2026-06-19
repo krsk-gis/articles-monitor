@@ -78,7 +78,7 @@ html_template = f"""
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cikk monitor</title>
+    <title>Geo cikk monitor</title>
     <style>
         /* Sötét téma alapok */
         body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #121212; color: #e0e0e0; padding: 20px; margin: 0; line-height: 1.5; }}
@@ -113,7 +113,7 @@ html_template = f"""
 </head>
 <body>
     <div class="container">
-        <h1>Társadalomtudományi monitor (2022-2025)</h1>
+        <h1>Geo tudományos cikk monitor (2021-2026)</h1>
         <div class="update-info">Utoljára automatikusan frissítve: {frissitve}</div>
         {content_html}
     </div>
