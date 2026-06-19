@@ -52,7 +52,7 @@ def fetch_scopus_data(query, sort_by):
 content_html = ""
 for theme, en_query in THEMES.items():
     print(f"Lekérdezés: {theme}...")
-    search_query = f'TITLE-ABS-KEY({en_query}) AND PUBYEAR > 2021 AND PUBYEAR < 2026'
+    search_query = f'TITLE-ABS-KEY({en_query}) AND PUBYEAR > 2020 AND PUBYEAR < 2027'
     
     latest = fetch_scopus_data(search_query, '-coverDate')
     popular = fetch_scopus_data(search_query, '-citedby-count')
