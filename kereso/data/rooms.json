@@ -1,0 +1,79 @@
+[
+  {
+    "id": "a-301",
+    "code": "A-301",
+    "name": "301-es előadó",
+    "building_id": "a-epulet",
+    "floor": 3,
+    "type": "előadó",
+    "capacity": 60,
+    "equipment": ["projektor", "mikrofon", "klíma"],
+    "accessibility": {
+      "wheelchair_accessible": true,
+      "elevator": true,
+      "ramp": false,
+      "accessible_toilet_nearby": true,
+      "braille_signage": false,
+      "induction_loop": false,
+      "route_from_entrance": [
+        "Lépj be a Főbejáraton.",
+        "A portától haladj egyenesen, majd fordulj jobbra a lifthez.",
+        "Menj a lifttel a 3. emeletre.",
+        "A liftből kiszállva fordulj balra, a folyosó végén balra a 301-es terem."
+      ],
+      "landmarks": ["Porta", "Büfé az 1. emeleten", "Lift A"],
+      "photo_url": ""
+    }
+  },
+  {
+    "id": "a-215",
+    "code": "A-215",
+    "name": "215-ös szeminárium",
+    "building_id": "a-epulet",
+    "floor": 2,
+    "type": "szeminárium",
+    "capacity": 20,
+    "equipment": ["tábla", "projektor"],
+    "accessibility": {
+      "wheelchair_accessible": true,
+      "elevator": true,
+      "ramp": true,
+      "accessible_toilet_nearby": true,
+      "braille_signage": false,
+      "induction_loop": false,
+      "route_from_entrance": [
+        "Lépj be a Főbejáraton.",
+        "A portától jobbra egy rámpa vezet a földszinti folyosóra.",
+        "Menj a lifttel a 2. emeletre.",
+        "Kiszállva egyenesen tovább, a 215-ös terem a folyosó közepén, jobb oldalon."
+      ],
+      "landmarks": ["Porta", "Rámpa a földszinten", "Lift A"],
+      "photo_url": ""
+    }
+  },
+  {
+    "id": "a-014",
+    "code": "A-014",
+    "name": "014-es számítógépterem",
+    "building_id": "a-epulet",
+    "floor": 0,
+    "type": "számítógépterem",
+    "capacity": 25,
+    "equipment": ["számítógépek", "projektor"],
+    "accessibility": {
+      "wheelchair_accessible": false,
+      "elevator": false,
+      "ramp": false,
+      "accessible_toilet_nearby": false,
+      "braille_signage": false,
+      "induction_loop": false,
+      "route_from_entrance": [
+        "Lépj be a Hátsó (parkolói) bejáraton.",
+        "A folyosón egyenesen tovább, majd 8 lépcsőfok le a félemeletre.",
+        "A lépcső aljától jobbra a 014-es terem."
+      ],
+      "landmarks": ["Rakodó udvar", "Lépcső a félemeletre"],
+      "photo_url": ""
+    }
+  }
+]

@@ -1,0 +1,23 @@
+[
+  {
+    "subject": "Bevezetés a társadalomföldrajzba",
+    "teacher_id": "kovacs-janos",
+    "room_id": "a-301",
+    "day": "Hétfő",
+    "time": "10:00-11:30"
+  },
+  {
+    "subject": "Városfejlesztési szeminárium",
+    "teacher_id": "nagy-eszter",
+    "room_id": "a-215",
+    "day": "Szerda",
+    "time": "12:00-13:30"
+  },
+  {
+    "subject": "GIS gyakorlat",
+    "teacher_id": "toth-peter",
+    "room_id": "a-014",
+    "day": "Csütörtök",
+    "time": "9:00-10:30"
+  }
+]

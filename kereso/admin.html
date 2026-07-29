@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adatszerkesztő – Terem- és tanárkereső</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Adatszerkesztő</h1>
+    <p class="hint">
+      Itt szerkesztheted a termek, tanárok, épületek és órarend adatait. A szerkesztés csak a böngésződben történik –
+      amikor végeztél, az egyes szekciók alján töltsd le a frissített JSON fájlt, és cseréld le vele a megfelelő fájlt
+      a <code>kereso/data/</code> mappában (pl. a GitHub weboldalán szerkesztve, vagy git push-sal).
+    </p>
+
+    <!-- ÉPÜLETEK -->
+    <fieldset>
+      <legend>Épületek</legend>
+      <div id="buildings-list"></div>
+      <form id="building-form">
+        <input type="hidden" id="building-edit-id">
+        <label>Azonosító (kisbetűs, kötőjeles, pl. b-epulet)</label>
+        <input type="text" id="building-id" required>
+        <label>Név</label>
+        <input type="text" id="building-name" required>
+        <label>Cím</label>
+        <input type="text" id="building-address">
+        <label>GPS koordináták (lat, lng)</label>
+        <input type="text" id="building-coords" placeholder="47.4979, 19.0402">
+        <label>Legközelebbi tömegközlekedés</label>
+        <input type="text" id="building-transit">
+        <label>Parkolás</label>
+        <input type="text" id="building-parking">
+        <label>Megjegyzés</label>
+        <textarea id="building-notes"></textarea>
+        <label>Bejáratok (soronként: Név | Leírás | akadálymentes: igen/nem | automata ajtó: igen/nem | nyitvatartás)</label>
+        <textarea id="building-entrances" placeholder="Főbejárat | A portánál | igen | igen | 6:00-22:00"></textarea>
+        <button type="submit">Mentés</button>
+        <button type="button" class="secondary" onclick="resetForm('building')">Új / mégse</button>
+      </form>
+      <h3>Export</h3>
+      <pre class="json-output" id="buildings-json"></pre>
+      <button type="button" onclick="downloadJson('buildings')">buildings.json letöltése</button>
+    </fieldset>
+
+    <!-- TERMEK -->
+    <fieldset>
+      <legend>Termek</legend>
+      <div id="rooms-list"></div>
+      <form id="room-form">
+        <input type="hidden" id="room-edit-id">
+        <label>Azonosító (pl. a-301)</label>
+        <input type="text" id="room-id" required>
+        <label>Kód (pl. A-301)</label>
+        <input type="text" id="room-code" required>
+        <label>Név</label>
+        <input type="text" id="room-name" required>
+        <label>Épület</label>
+        <select id="room-building"></select>
+        <label>Emelet</label>
+        <input type="number" id="room-floor">
+        <label>Típus (előadó, szeminárium, labor, stb.)</label>
+        <input type="text" id="room-type">
+        <label>Férőhely</label>
+        <input type="number" id="room-capacity">
+        <label>Felszereltség (vesszővel elválasztva)</label>
+        <input type="text" id="room-equipment" placeholder="projektor, tábla, klíma">
+
+        <label>Akadálymentesítés</label>
+        <div class="checkbox-row"><input type="checkbox" id="room-wheelchair"><span>Kerekesszékkel megközelíthető</span></div>
+        <div class="checkbox-row"><input type="checkbox" id="room-elevator"><span>Lift az útvonalon</span></div>
+        <div class="checkbox-row"><input type="checkbox" id="room-ramp"><span>Rámpa</span></div>
+        <div class="checkbox-row"><input type="checkbox" id="room-toilet"><span>Akadálymentes mosdó közelben</span></div>
+        <div class="checkbox-row"><input type="checkbox" id="room-braille"><span>Braille-jelzés</span></div>
+        <div class="checkbox-row"><input type="checkbox" id="room-induction"><span>Indukciós hurok</span></div>
+
+        <label>Útvonal a bejárattól (soronként egy lépés)</label>
+        <textarea id="room-route" placeholder="Lépj be a főbejáraton.&#10;Fordulj jobbra a lifthez.&#10;Menj a 3. emeletre."></textarea>
+        <label>Tájékozódási pontok (vesszővel elválasztva)</label>
+        <input type="text" id="room-landmarks" placeholder="Porta, Büfé, Lift A">
+        <label>Fotó URL (opcionális, pl. images/a301.jpg)</label>
+        <input type="text" id="room-photo">
+
+        <button type="submit">Mentés</button>
+        <button type="button" class="secondary" onclick="resetForm('room')">Új / mégse</button>
+      </form>
+      <h3>Export</h3>
+      <pre class="json-output" id="rooms-json"></pre>
+      <button type="button" onclick="downloadJson('rooms')">rooms.json letöltése</button>
+    </fieldset>
+
+    <!-- TANÁROK -->
+    <fieldset>
+      <legend>Tanárok</legend>
+      <div id="teachers-list"></div>
+      <form id="teacher-form">
+        <input type="hidden" id="teacher-edit-id">
+        <label>Azonosító (pl. kovacs-janos)</label>
+        <input type="text" id="teacher-id" required>
+        <label>Név</label>
+        <input type="text" id="teacher-name" required>
+        <label>Tanszék</label>
+        <input type="text" id="teacher-department">
+        <label>E-mail</label>
+        <input type="text" id="teacher-email">
+        <label>Iroda (terem)</label>
+        <select id="teacher-office"></select>
+        <label>Fogadóóra (soronként: Nap, Idő)</label>
+        <textarea id="teacher-hours" placeholder="Kedd, 10:00-12:00"></textarea>
+        <button type="submit">Mentés</button>
+        <button type="button" class="secondary" onclick="resetForm('teacher')">Új / mégse</button>
+      </form>
+      <h3>Export</h3>
+      <pre class="json-output" id="teachers-json"></pre>
+      <button type="button" onclick="downloadJson('teachers')">teachers.json letöltése</button>
+    </fieldset>
+
+    <!-- ÓRAREND -->
+    <fieldset>
+      <legend>Órarend</legend>
+      <div id="schedule-list"></div>
+      <form id="schedule-form">
+        <input type="hidden" id="schedule-edit-id">
+        <label>Tárgy</label>
+        <input type="text" id="schedule-subject" required>
+        <label>Tanár</label>
+        <select id="schedule-teacher"></select>
+        <label>Terem</label>
+        <select id="schedule-room"></select>
+        <label>Nap</label>
+        <select id="schedule-day">
+          <option>Hétfő</option><option>Kedd</option><option>Szerda</option>
+          <option>Csütörtök</option><option>Péntek</option><option>Szombat</option><option>Vasárnap</option>
+        </select>
+        <label>Időpont (pl. 10:00-11:30)</label>
+        <input type="text" id="schedule-time" required>
+        <button type="submit">Mentés</button>
+        <button type="button" class="secondary" onclick="resetForm('schedule')">Új / mégse</button>
+      </form>
+      <h3>Export</h3>
+      <pre class="json-output" id="schedule-json"></pre>
+      <button type="button" onclick="downloadJson('schedule')">schedule.json letöltése</button>
+    </fieldset>
+
+    <div class="footer-link"><a href="index.html">Vissza a keresőhöz</a></div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

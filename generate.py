@@ -114,7 +114,10 @@ html_template = f"""
 <body>
     <div class="container">
         <h1>Geo tudományos cikk monitor (2021-2026)</h1>
-        <div class="update-info">Utoljára automatikusan frissítve: {frissitve}</div>
+        <div class="update-info">
+            Utoljára automatikusan frissítve: {frissitve}
+            &middot; <a href="kereso/index.html" style="color:#64b5f6;">Terem- és tanárkereső</a>
+        </div>
         {content_html}
     </div>
 </body>

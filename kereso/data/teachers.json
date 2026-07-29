@@ -1,0 +1,33 @@
+[
+  {
+    "id": "kovacs-janos",
+    "name": "Dr. Kovács János",
+    "department": "Társadalomföldrajz Tanszék",
+    "email": "kovacs.janos@example.edu",
+    "office_room_id": "a-215",
+    "office_hours": [
+      { "day": "Kedd", "time": "10:00-12:00" }
+    ]
+  },
+  {
+    "id": "nagy-eszter",
+    "name": "Dr. Nagy Eszter",
+    "department": "Városfejlesztési Tanszék",
+    "email": "nagy.eszter@example.edu",
+    "office_room_id": "a-301",
+    "office_hours": [
+      { "day": "Szerda", "time": "14:00-15:30" }
+    ]
+  },
+  {
+    "id": "toth-peter",
+    "name": "Tóth Péter",
+    "department": "Térinformatikai Tanszék",
+    "email": "toth.peter@example.edu",
+    "office_room_id": "a-014",
+    "office_hours": [
+      { "day": "Hétfő", "time": "9:00-10:00" },
+      { "day": "Csütörtök", "time": "13:00-14:00" }
+    ]
+  }
+]

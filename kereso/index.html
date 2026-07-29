@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terem- és tanárkereső</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Terem- és tanárkereső</h1>
+
+    <div class="search-bar">
+      <div class="tabs">
+        <button id="tab-termek" class="tab-btn active" onclick="setTab('termek')">Termek</button>
+        <button id="tab-tanarok" class="tab-btn" onclick="setTab('tanarok')">Tanárok</button>
+      </div>
+      <input id="search-input" class="search-input" type="text" placeholder="Terem neve, kódja..." autocomplete="off">
+    </div>
+
+    <div id="results" class="results"></div>
+
+    <div class="footer-link"><a href="admin.html">Adatszerkesztő (adminoknak)</a></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

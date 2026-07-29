@@ -1,0 +1,27 @@
+[
+  {
+    "id": "a-epulet",
+    "name": "A épület",
+    "address": "Példa utca 1., 1000 Budapest",
+    "coordinates": { "lat": 47.4979, "lng": 19.0402 },
+    "entrances": [
+      {
+        "name": "Főbejárat",
+        "description": "Az utca felől, a portaszolgálat mellett.",
+        "wheelchair_accessible": true,
+        "automatic_door": true,
+        "opening_hours": "Hétfő-Péntek 6:00-22:00"
+      },
+      {
+        "name": "Hátsó (parkolói) bejárat",
+        "description": "A parkoló felől, a rakodó udvar mellett.",
+        "wheelchair_accessible": false,
+        "automatic_door": false,
+        "opening_hours": "Hétfő-Péntek 7:00-18:00"
+      }
+    ],
+    "nearest_transit": "Példa tér villamosmegálló (2, 4-es villamos), 3 perc gyalog a főbejárattól",
+    "parking": "Látogatói parkoló az épület mögött, 10 db mozgáskorlátozott hellyel",
+    "notes": "A campus többi épülete (B, C) a főbejárattól balra, fedett sétányon közelíthető meg."
+  }
+]
